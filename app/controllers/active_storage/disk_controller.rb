@@ -5,8 +5,6 @@
 # Always go through the BlobsController, or your own authenticated controller, rather than directly
 # to the service url.
 class ActiveStorage::DiskController < ActionController::Base
-  skip_forgery_protection if default_protect_from_forgery
-
   def show
     if key = decode_verified_key
       send_data disk_service.download(key),
@@ -35,9 +33,8 @@ class ActiveStorage::DiskController < ActionController::Base
       ActiveStorage::Blob.service
     end
 
-
     def decode_verified_key
-      ActiveStorage.verifier.verified(params[:encoded_key], purpose: :blob_key)
+      ActiveStorage.verifier.verify(params[:encoded_key]).try(:fetch, :id)
     end
 
 
