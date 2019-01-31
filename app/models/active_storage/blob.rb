@@ -216,7 +216,7 @@ class ActiveStorage::Blob < ActiveRecord::Base
     self.checksum  = compute_checksum_in_chunks(io)
     self.byte_size = io.size
 
-    service.upload(key, io, checksum: checksum)
+    service.upload(key, io, checksum: checksum, content_type: content_type)
   end
 
   # Downloads the file associated with this blob. If no block is given, the entire file is read into memory and returned.

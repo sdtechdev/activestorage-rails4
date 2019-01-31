@@ -13,7 +13,7 @@ module ActiveStorage
       @config = config
     end
 
-    def upload(key, io, checksum: nil)
+    def upload(key, io, checksum: nil, **)
       instrument :upload, key: key, checksum: checksum do
         begin
           # The official GCS client library doesn't allow us to create a file with no Content-Type metadata.

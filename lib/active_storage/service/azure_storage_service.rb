@@ -18,7 +18,7 @@ module ActiveStorage
       @path = path
     end
 
-    def upload(key, io, checksum: nil)
+    def upload(key, io, checksum: nil, **)
       instrument :upload, key: key, checksum: checksum do
         begin
           blobs.create_block_blob(container, key, io, content_md5: checksum)
